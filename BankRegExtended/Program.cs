@@ -9,7 +9,7 @@ namespace BankRegExtended
 {
     class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             List<Client> clients = new List<Client>();
             clients.Add(new Client
@@ -46,15 +46,15 @@ namespace BankRegExtended
             });
 
 
-            var findName =
-                from client in clients
-                where client.Name == "Василий Александрович Петров"
-                orderby client.AccSum descending
-                select client;
-            foreach (var cl in findName)
-            {
-                Console.WriteLine($"Найден клиент {cl.DateOfBirth}");
-            }
+            string strDate = "15.05.2002";
+            var dateDif = DateTime.Parse(strDate);
+            Console.WriteLine(dateDif.Year);
+
+            GetClientByPass(clients, "I-ПР058845");
+            GetClientByName(clients, "Алиса Макаровна Шашли");
+
+
+
 
 
             var lowerSum =
@@ -68,7 +68,7 @@ namespace BankRegExtended
             Dictionary<string, decimal> sumCollection =
             new Dictionary<string, decimal>();
 
-            
+
             foreach (var cl in clients)
             {
                 sumCollection.Add(cl.Name, cl.AccSum);
@@ -76,12 +76,36 @@ namespace BankRegExtended
             decimal lowestFromVal = sumCollection.Values.Min();
             foreach (var cl in sumCollection)
             {
-                if(cl.Value == lowestFromVal) { Console.WriteLine($"{cl.Key} {cl.Value}"); }
+                if (cl.Value == lowestFromVal) { Console.WriteLine($"{cl.Key} {cl.Value}"); }
             }
 
             decimal overall = sumCollection.Values.Sum();
             Console.WriteLine(overall);
 
+        }
+        public static void GetClientByPass(List<Client> clients, string passNumber)
+        {
+             var findName =
+           from client in clients
+           where client.PassNumber == passNumber
+           select client;
+
+            foreach (var item in findName)
+            {
+                Console.WriteLine($" Найдены данные по номеру пасспорта {passNumber}: {item.Name} {item.AccSum}");
+            }
+        }
+        public static void GetClientByName(List<Client> clients, string name)
+        {
+            var findName =
+          from client in clients
+          where client.Name == name
+          select client;
+
+            foreach (var item in findName)
+            {
+                Console.WriteLine($" Найдены данные по ФИО {name}: {item.AccNumber} {item.AccSum}");
+            }
         }
 
 
