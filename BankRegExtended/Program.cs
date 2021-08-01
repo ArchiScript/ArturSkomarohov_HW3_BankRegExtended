@@ -54,26 +54,26 @@ namespace BankRegExtended
 
 
             //Поиск по номеру паспорта
-            GetClientByPass(clients, "I-ПР058845");
+            DisplayClientByPass(clients, "I-ПР058845");
 
             //Поиск по имени
-            GetClientByName(clients, "Алиса Макаровна Шашли");
+            DisplayClientByName(clients, "Алиса Макаровна Шашли");
 
             //Выборка по сумме
-            GetClientUnderSum(clients, 1200);
+            DisplayClientUnderSum(clients, 1200);
 
             //Поиск клиента с мин суммой
-            GetLowestSumClient(clients);
+            DisplayLowestSumClient(clients);
 
             //Подсчет общей суммы денег
             CountAllMoney(clients);
 
             //Самый молодой клиент банка
-            GetYoungClient(clients);
+            DisplayYoungClient(clients);
 
 
         }
-        public static void GetClientByPass(List<Client> clients, string passNumber)
+        public static void DisplayClientByPass(List<Client> clients, string passNumber)
         {
             var findName =
           from client in clients
@@ -85,7 +85,7 @@ namespace BankRegExtended
                 Console.WriteLine($" Найдены данные по номеру пасспорта {passNumber}: {item.Name} {item.AccSum} \n");
             }
         }
-        public static void GetClientByName(List<Client> clients, string name)
+        public static void DisplayClientByName(List<Client> clients, string name)
         {
             var findName =
           from client in clients
@@ -98,7 +98,7 @@ namespace BankRegExtended
             }
         }
 
-        public static void GetClientUnderSum(List<Client> clients, decimal sum)
+        public static void DisplayClientUnderSum(List<Client> clients, decimal sum)
         {
             var lowerSum =
                from client in clients
@@ -110,7 +110,7 @@ namespace BankRegExtended
             }
         }
 
-        public static void GetLowestSumClient(List<Client> clients)
+        public static void DisplayLowestSumClient(List<Client> clients)
         {
             Dictionary<string, decimal> sumCollection =
             new Dictionary<string, decimal>();
@@ -142,7 +142,7 @@ namespace BankRegExtended
             Console.WriteLine($" Общая сумма остатков на счетах клиентов банка: {totalSum} \n");
         }
 
-        public static void GetYoungClient(List<Client> clients)
+        public static void DisplayYoungClient(List<Client> clients)
         {
             Dictionary<DateTime, string> birthDays =
             new Dictionary<DateTime, string>();
