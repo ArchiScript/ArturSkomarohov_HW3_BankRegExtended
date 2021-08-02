@@ -6,6 +6,6 @@ namespace BankRegExtended
 {
     class USD:Currency
     {
-        decimal 
+        public double Rate = 1; 
     }
 }

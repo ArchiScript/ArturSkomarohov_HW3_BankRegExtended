@@ -6,6 +6,6 @@ namespace BankRegExtended
 {
    public class RUB:Currency
     {
-
+        public double Rate = 16.3;
     }
 }

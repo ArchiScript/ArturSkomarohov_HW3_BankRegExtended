@@ -12,8 +12,8 @@ namespace BankRegExtended
         public string Name { get; set; }
         public string DateOfBirth { get; set; }
         public string PassNumber { get; set; }
-        public ulong AccNumber { get; set; }
-        public decimal AccSum { get; set; }
+        public Account AccData { get; set; }
+        //public decimal AccSum { get; set; }
 
 
         public override bool Equals(object obj)
@@ -26,8 +26,9 @@ namespace BankRegExtended
             return result.Name == Name &&
                 result.DateOfBirth == DateOfBirth &&
                 result.PassNumber == PassNumber &&
-                result.AccNumber == AccNumber&&
-                result.AccSum == AccSum;
+                result.AccData == AccData;
+                //&&
+                //result.AccSum == AccSum;
         }
         public static bool operator ==(Client first, Client second)
         {
@@ -40,8 +41,9 @@ namespace BankRegExtended
         public override int GetHashCode()
         {
             return Name.GetHashCode() + DateOfBirth.GetHashCode() +
-                PassNumber.GetHashCode() + AccNumber.GetHashCode()+
-                AccSum.GetHashCode();
+                PassNumber.GetHashCode() + AccData.GetHashCode();
+                //+
+               // AccSum.GetHashCode();
         }
 
     }

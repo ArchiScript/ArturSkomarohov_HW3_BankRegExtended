@@ -6,6 +6,6 @@ namespace BankRegExtended
 {
     public class Currency
     {
-        public decimal PriceUSD{ get; set; }
+        public double PriceUSD{ get; set; }
     }
 }
