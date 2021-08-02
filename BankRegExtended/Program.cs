@@ -16,36 +16,36 @@ namespace BankRegExtended
                 Name = "Василий Александрович Петров",
                 DateOfBirth = "25.05.1975",
                 PassNumber = "I-ПР012345",
-                
-            }, new Account { AccNumber = 0230000000563456, CurrencyType = new RUB(), Ammount = 460 });
+
+            }, new Account { AccNumber = 0230000000563456, CurrencyType = new RUB(), Balance = 460 });
             clients.Add(new Client
             {
                 Name = "Dan Brown",
                 DateOfBirth = "23.09.1985",
                 PassNumber = "I-ПР055345",
-               
-            }, new Account { AccNumber = 0230000000143456, CurrencyType = new RUB(), Ammount = 1200 });
+
+            }, new Account { AccNumber = 0230000000143456, CurrencyType = new RUB(), Balance = 1200 });
             clients.Add(new Client
             {
                 Name = "Егор Борисович Брынза",
                 DateOfBirth = "01.02.1963",
                 PassNumber = "I-ПР058845",
-                               
-            }, new Account { AccNumber = 0230000000178456, CurrencyType = new RUB(), Ammount = 8700 });
+
+            }, new Account { AccNumber = 0230000000178456, CurrencyType = new RUB(), Balance = 8700 });
             clients.Add(new Client
             {
                 Name = "Алиса Макаровна Шашли",
                 DateOfBirth = "05.08.2001",
                 PassNumber = "I-ПР753845",
-                
-            }, new Account { AccNumber = 0230000000278456, CurrencyType = new RUB(), Ammount = 1200 });
+
+            }, new Account { AccNumber = 0230000000278456, CurrencyType = new RUB(), Balance = 1200 });
             clients.Add(new Client
             {
                 Name = "Изя Вольфович Шниперсон",
                 DateOfBirth = "14.06.1958",
                 PassNumber = "I-ПР753822",
-                
-            }, new Account { AccNumber = 0230000000778456, CurrencyType = new USD(), Ammount = 2300 });
+
+            }, new Account { AccNumber = 0230000000778456, CurrencyType = new USD(), Balance = 2300 });
 
 
             //Поиск по номеру паспорта
@@ -68,7 +68,7 @@ namespace BankRegExtended
 
 
         }
-        public static void DisplayClientByPass(Dictionary<Client,Account> clients, string passNumber)
+        public static void DisplayClientByPass(Dictionary<Client, Account> clients, string passNumber)
         {
             var findName =
           from client in clients
@@ -77,7 +77,7 @@ namespace BankRegExtended
 
             foreach (var item in findName)
             {
-                Console.WriteLine($" Найдены данные по номеру пасспорта {passNumber}: {item.Key.Name} {item.Value.Ammount} \n");
+                Console.WriteLine($" Найдены данные по номеру пасспорта {passNumber}: {item.Key.Name} {item.Value.Balance} {item.Value.CurrencyType.Price} \n");
             }
         }
         public static void DisplayClientByName(Dictionary<Client, Account> clients, string name)
@@ -89,30 +89,30 @@ namespace BankRegExtended
 
             foreach (var item in findName)
             {
-                Console.WriteLine($" Найдены данные по ФИО {name}: {item.Value.AccNumber} {item.Value.AccNumber} \n");
+                Console.WriteLine($" Найдены данные по ФИО {name}: {item.Key.Name} {item.Value.AccNumber} \n");
             }
         }
 
-        public static void DisplayClientUnderSum(Dictionary<Client,Account> clients, decimal sum)
+        public static void DisplayClientUnderSum(Dictionary<Client, Account> clients, decimal sum)
         {
             var lowerSum =
                from client in clients
-               where client.Value.Ammount < sum
+               where client.Value.Balance < sum
                select client;
             foreach (var cl in lowerSum)
             {
-                Console.WriteLine($" Сумма меньше {sum}$:   {cl.Key.Name} {cl.Key.PassNumber} {cl.Value.Ammount} \n");
+                Console.WriteLine($" Сумма меньше {sum}$:   {cl.Key.Name} {cl.Key.PassNumber} {cl.Value.Balance} \n");
             }
         }
 
-        public static void DisplayLowestSumClient(Dictionary<Client,Account> clients)
+        public static void DisplayLowestSumClient(Dictionary<Client, Account> clients)
         {
             Dictionary<string, decimal> sumCollection =
             new Dictionary<string, decimal>();
 
             foreach (var cl in clients)
             {
-                sumCollection.Add(cl.Key.Name, cl.Value.Ammount);
+                sumCollection.Add(cl.Key.Name, cl.Value.Balance);
             }
             decimal lowestFromVal = sumCollection.Values.Min();
             foreach (var cl in sumCollection)
@@ -124,20 +124,21 @@ namespace BankRegExtended
             }
         }
 
-        public static void CountAllMoney(Dictionary<Client,Account> clients)
+        public static void CountAllMoney(Dictionary<Client, Account> clients)
         {
             Dictionary<string, decimal> sumCollection =
             new Dictionary<string, decimal>();
 
             foreach (var cl in clients)
             {
-                sumCollection.Add(cl.Key.Name, cl.Value.Ammount);
+                sumCollection.Add(cl.Key.Name, cl.Value.Balance);
             }
             decimal totalSum = sumCollection.Values.Sum();
+
             Console.WriteLine($" Общая сумма остатков на счетах клиентов банка: {totalSum} \n");
         }
 
-        public static void DisplayYoungClient(Dictionary<Client,Account> clients)
+        public static void DisplayYoungClient(Dictionary<Client, Account> clients)
         {
             Dictionary<DateTime, string> birthDays =
             new Dictionary<DateTime, string>();

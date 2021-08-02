@@ -12,7 +12,7 @@ namespace BankRegExtended
         public string Name { get; set; }
         public string DateOfBirth { get; set; }
         public string PassNumber { get; set; }
-        public Account AccData { get; set; }
+        //public Account AccData;
         //public decimal AccSum { get; set; }
 
 
@@ -25,8 +25,9 @@ namespace BankRegExtended
             Client result = (Client)obj;
             return result.Name == Name &&
                 result.DateOfBirth == DateOfBirth &&
-                result.PassNumber == PassNumber &&
-                result.AccData == AccData;
+                result.PassNumber == PassNumber;
+                //&&
+                //result.AccData == AccData;
                 //&&
                 //result.AccSum == AccSum;
         }
@@ -41,7 +42,8 @@ namespace BankRegExtended
         public override int GetHashCode()
         {
             return Name.GetHashCode() + DateOfBirth.GetHashCode() +
-                PassNumber.GetHashCode() + AccData.GetHashCode();
+                PassNumber.GetHashCode();
+                //+ AccData.GetHashCode();
                 //+
                // AccSum.GetHashCode();
         }
