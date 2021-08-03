@@ -4,12 +4,11 @@ using System.Text;
 
 namespace BankRegExtended
 {
-    public class RUB : Currency
+    class CurrencyConverter
     {
-        public RUB()
+        public decimal CurrencyCoverter()
         {
-            Rate = 16.3m;
-            Sign = "RUB";
+
         }
     }
 }

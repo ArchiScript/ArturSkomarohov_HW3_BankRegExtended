@@ -7,13 +7,13 @@ using System.Linq;
 
 namespace BankRegExtended
 {
-    public class Client 
+    public class Client
     {
         public string Name { get; set; }
         public string DateOfBirth { get; set; }
         public string PassNumber { get; set; }
         //public Account AccData;
-        //public decimal AccSum { get; set; }
+        
 
 
         public override bool Equals(object obj)
@@ -28,8 +28,8 @@ namespace BankRegExtended
                 result.PassNumber == PassNumber;
                 //&&
                 //result.AccData == AccData;
-                //&&
-                //result.AccSum == AccSum;
+            //&&
+            //result.AccSum == AccSum;
         }
         public static bool operator ==(Client first, Client second)
         {
@@ -43,9 +43,13 @@ namespace BankRegExtended
         {
             return Name.GetHashCode() + DateOfBirth.GetHashCode() +
                 PassNumber.GetHashCode();
-                //+ AccData.GetHashCode();
-                //+
-               // AccSum.GetHashCode();
+               /* +
+                (AccData.AccNumber.GetHashCode() +
+                AccData.Balance.GetHashCode() +
+                AccData.CurrencyType.GetHashCode());*/
+            //+ AccData.GetHashCode();
+            //+
+            // AccSum.GetHashCode();
         }
 
     }

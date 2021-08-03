@@ -17,6 +17,7 @@ namespace BankRegExtended
                 DateOfBirth = "25.05.1975",
                 PassNumber = "I-ПР012345",
 
+
             }, new Account { AccNumber = 0230000000563456, CurrencyType = new RUB(), Balance = 460m });
             clients.Add(new Client
             {
@@ -38,7 +39,7 @@ namespace BankRegExtended
                 DateOfBirth = "05.08.2001",
                 PassNumber = "I-ПР753845",
 
-            }, new Account { AccNumber = 0230000000278456, CurrencyType = new RUB(), Balance = 1200m });
+            }, new Account { AccNumber = 0230000000278456, CurrencyType = new RUB(), Balance = 1700m });
             clients.Add(new Client
             {
                 Name = "Изя Вольфович Шниперсон",
@@ -50,7 +51,7 @@ namespace BankRegExtended
 
             //Поиск по номеру паспорта
             DisplayClient(GetClientByPass(clients, "I-ПР058845"));
-            //DisplayClientByPass(clients, "I-ПР058845");
+
 
             //Поиск по имени
             DisplayClientByName(clients, "Алиса Макаровна Шашли");
@@ -70,30 +71,58 @@ namespace BankRegExtended
 
         }
 
-        public static void DisplayClient(Client cl)
+        public static void DisplayClient(Dictionary<Client, Account> resultPair)
         {
-            Console.WriteLine(cl.Name, cl.PassNumber, cl.DateOfBirth);
+            foreach (var cl in resultPair)
+            {
+                Console.WriteLine($"Найдены данные по номеру пасспорта \n" +
+                    $"{cl.Key.Name} пасспорт № {cl.Key.PassNumber} \n Счет: {cl.Value.AccNumber} " +
+                    $"{cl.Value.Balance} {cl.Value.CurrencyType.Sign} ");
+            }
         }
 
-        public static Client GetClientByPass(Dictionary<Client, Account> clients, string passNumber)
+        public static Dictionary<Client, Account> GetClientByPass(Dictionary<Client, Account> clients, string passNumber)
         {
-            return (from client in clients
-                    where client.Key.PassNumber == passNumber
-                    select new Client
+
+            var findName =
+            from client in clients
+            where client.Key.PassNumber == passNumber
+            select client;
+            Dictionary<Client, Account> result = new Dictionary<Client, Account>();
+            foreach (var item in findName)
+            {
+
+                result.Add(
+                    new Client
+                    {
+                        Name = item.Key.Name,
+                        PassNumber = item.Key.PassNumber,
+                        DateOfBirth = item.Key.DateOfBirth
+                    },
+                new Account
+                {
+                    AccNumber = item.Value.AccNumber,
+                    Balance = item.Value.Balance,
+                    CurrencyType = item.Value.CurrencyType
+                });
+                /*select (new Dictionary<Client, Account>().Add(
+
+                    new Client
                     {
                         Name = client.Key.Name,
                         PassNumber = client.Key.PassNumber,
                         DateOfBirth = client.Key.DateOfBirth
-                    }).FirstOrDefault();
+                    },
+                    new Account
+                    {
+                        AccNumber = client.Value.AccNumber,
+                        Balance = client.Value.Balance,
+                        CurrencyType = client.Value.CurrencyType
+                    }
+                    ))).FirstOrDefault();*/
 
-            /*foreach (ref var item in findName)
-            {
-                var rate = item.Value.CurrencyType.Rate;
-                var sign = item.Value.CurrencyType.Sign;
-                //Console.WriteLine($" Найдены данные по номеру пасспорта {passNumber}: {item.Key.Name} {item.Value.Balance} {rate} {sign}  \n");
-                a = new Client{ Name = item.Key.Name, DateOfBirth = item.Key.DateOfBirth, PassNumber = item.Key.PassNumber };
-            }*/
-            //return findName;
+            }
+            return result;
         }
         public static void DisplayClientByName(Dictionary<Client, Account> clients, string name)
         {
@@ -141,18 +170,12 @@ namespace BankRegExtended
 
         public static void CountAllMoney(Dictionary<Client, Account> clients)
         {
-            /*Dictionary<string, decimal> sumCollection =
-            new Dictionary<string, decimal>();*/
             List<decimal> sumCollection = new List<decimal>();
-
             foreach (var cl in clients)
             {
-                /*sumCollection.Add(cl.Key.Name, cl.Value.Balance);*/
                 sumCollection.Add(cl.Value.Balance);
             }
-            /*decimal totalSum = sumCollection.Values.Sum();*/
             decimal totalSum = sumCollection.Sum();
-
             Console.WriteLine($" Общая сумма остатков на счетах клиентов банка: {totalSum} \n");
         }
 
@@ -160,7 +183,6 @@ namespace BankRegExtended
         {
             Dictionary<DateTime, string> birthDays =
             new Dictionary<DateTime, string>();
-
 
             foreach (var cl in clients)
             {
