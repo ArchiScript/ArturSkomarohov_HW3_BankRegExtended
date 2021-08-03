@@ -10,12 +10,15 @@ namespace BankRegExtended
     {
         public static void Main(string[] args)
         {
-            Dictionary<Client, Account> clients = new Dictionary<Client, Account>();
+            Dictionary<Client, Dictionary<ulong,Account>> clients = new Dictionary<Client, Dictionary<ulong, Account>>();
             clients.Add(new Client
             {
                 Name = "Василий Александрович Петров",
                 DateOfBirth = "25.05.1975",
                 PassNumber = "I-ПР012345",
+                accounts
+                
+                
 
 
             }, new Account { AccNumber = 0230000000563456, CurrencyType = new RUB(), Balance = 460m });
@@ -68,16 +71,15 @@ namespace BankRegExtended
             //Самый молодой клиент банка
             DisplayYoungClient(clients);
 
-            //var conv = new CurrencyConverter().ConvertCur(24m,new EUR(), new UAH());
-            //Console.WriteLine($"Переведена валюта {conv}");
-            DisplayConvertedCur(24m, new EUR(), new UAH());
+           
+            DisplayConvertedCur(25, new USD(), new UAH());
         }
 
 
         public static void DisplayConvertedCur(decimal ammount, Currency convertFrom, Currency convertTo)
         {
             var conv = new CurrencyConverter().ConvertCur(ammount, convertFrom, convertTo);
-            Console.WriteLine($"Переведено: {ammount} {convertFrom.Sign} на {conv} {convertTo.Sign}");
+            Console.WriteLine($"Конвертировано: {ammount} {convertFrom.Sign} на {conv} {convertTo.Sign}");
         }
         public static void DisplayClient(Dictionary<Client, Account> resultPair)
         {

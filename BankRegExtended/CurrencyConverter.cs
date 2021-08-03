@@ -13,7 +13,7 @@ namespace BankRegExtended
             calc = 0;
             if (convertFrom.Sign == "USD")
             {
-                calc = ammount * convertFrom.Rate;
+                calc = ammount * convertTo.Rate;
             }
             else if (convertFrom.Sign != "USD" && convertTo.Sign != "USD")
             {

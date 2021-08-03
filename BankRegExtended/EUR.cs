@@ -8,7 +8,7 @@ namespace BankRegExtended
     {
         public EUR()
         {
-            Rate = 1.18m;
+            Rate = 0.84m;
             Sign = "EUR";
         }
     }
