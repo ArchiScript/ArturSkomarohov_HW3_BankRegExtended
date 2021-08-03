@@ -4,12 +4,12 @@ using System.Text;
 
 namespace BankRegExtended
 {
-   public class RUB:Currency
+    class MDL : Currency
     {
-        public RUB()
+        public MDL()
         {
-           Rate = 16.3m;
-            Sign = "RUB";
+            Rate = 17.8m;
+            Sign = "MDL";
         }
     }
 }
