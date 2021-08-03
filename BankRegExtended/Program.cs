@@ -68,9 +68,17 @@ namespace BankRegExtended
             //Самый молодой клиент банка
             DisplayYoungClient(clients);
 
-
+            //var conv = new CurrencyConverter().ConvertCur(24m,new EUR(), new UAH());
+            //Console.WriteLine($"Переведена валюта {conv}");
+            DisplayConvertedCur(24m, new EUR(), new UAH());
         }
 
+
+        public static void DisplayConvertedCur(decimal ammount, Currency convertFrom, Currency convertTo)
+        {
+            var conv = new CurrencyConverter().ConvertCur(ammount, convertFrom, convertTo);
+            Console.WriteLine($"Переведено: {ammount} {convertFrom.Sign} на {conv} {convertTo.Sign}");
+        }
         public static void DisplayClient(Dictionary<Client, Account> resultPair)
         {
             foreach (var cl in resultPair)
@@ -83,15 +91,13 @@ namespace BankRegExtended
 
         public static Dictionary<Client, Account> GetClientByPass(Dictionary<Client, Account> clients, string passNumber)
         {
-
             var findName =
-            from client in clients
-            where client.Key.PassNumber == passNumber
-            select client;
+                from client in clients
+                where client.Key.PassNumber == passNumber
+                select client;
             Dictionary<Client, Account> result = new Dictionary<Client, Account>();
             foreach (var item in findName)
             {
-
                 result.Add(
                     new Client
                     {
@@ -99,15 +105,14 @@ namespace BankRegExtended
                         PassNumber = item.Key.PassNumber,
                         DateOfBirth = item.Key.DateOfBirth
                     },
-                new Account
-                {
-                    AccNumber = item.Value.AccNumber,
-                    Balance = item.Value.Balance,
-                    CurrencyType = item.Value.CurrencyType
-                });
+                    new Account
+                    {
+                        AccNumber = item.Value.AccNumber,
+                        Balance = item.Value.Balance,
+                        CurrencyType = item.Value.CurrencyType
+                    });
                 /*select (new Dictionary<Client, Account>().Add(
-
-                    new Client
+                                    new Client
                     {
                         Name = client.Key.Name,
                         PassNumber = client.Key.PassNumber,

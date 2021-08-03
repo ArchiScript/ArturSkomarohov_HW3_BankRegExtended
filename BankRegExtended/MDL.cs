@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BankRegExtended
 {
-    class MDL : Currency
+   public class MDL : Currency
     {
         public MDL()
         {

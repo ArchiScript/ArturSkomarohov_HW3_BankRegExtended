@@ -4,12 +4,12 @@ using System.Text;
 
 namespace BankRegExtended
 {
-    public class USD : Currency
+    public class UAH:Currency
     {
-        public USD()
+        public UAH()
         {
-            Rate = 1.0m;
-            Sign = "USD";
+            Rate = 26.8m;
+            Sign = "UAH";
         }
     }
 }

@@ -4,12 +4,12 @@ using System.Text;
 
 namespace BankRegExtended
 {
-    public class USD : Currency
+   public class EUR:Currency
     {
-        public USD()
+        public EUR()
         {
-            Rate = 1.0m;
-            Sign = "USD";
+            Rate = 1.18m;
+            Sign = "EUR";
         }
     }
 }
