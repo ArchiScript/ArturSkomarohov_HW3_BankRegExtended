@@ -6,13 +6,13 @@ using System.Linq;
 
 namespace BankRegExtended
 {
-    public class Program
+    class Program
     {
         public static void Main(string[] args)
         {
 
             Dictionary<Client, List<Account>> clients =
-    new Dictionary<Client, List<Account>>();
+            new Dictionary<Client, List<Account>>();
             clients.Add(new Client
             {
                 Name = "Василий Александрович Петров",
@@ -20,63 +20,93 @@ namespace BankRegExtended
                 PassNumber = "I-ПР012345",
 
 
-            }, new List<Account>().Add(
+            }, new List<Account> {
                 new Account
                 {
                     AccNumber = 0230000000143456,
                     CurrencyType = new RUB(),
                     Balance = 1200m
-                });
-                
-
+                } ,
+                new Account
+                {
+                    AccNumber = 0230000000643456,
+                    CurrencyType = new USD(),
+                    Balance = 5400m
+                }
+             }
+                );
             clients.Add(new Client
             {
                 Name = "Dan Brown",
                 DateOfBirth = "23.09.1985",
                 PassNumber = "I-ПР055345",
 
-            }, new Account { AccNumber = 0230000000143456, CurrencyType = new RUB(), Balance = 1200m });
+            }, new List<Account> { new Account
+            {
+                AccNumber = 0230000000143456,
+                CurrencyType = new RUB(),
+                Balance = 1200m }
+            });
             clients.Add(new Client
             {
                 Name = "Егор Борисович Брынза",
                 DateOfBirth = "01.02.1963",
                 PassNumber = "I-ПР058845",
 
-            }, new Account { AccNumber = 0230000000178456, CurrencyType = new MDL(), Balance = 8700m });
+            }, new List<Account> {
+                new Account {
+                    AccNumber = 0230000000178456,
+                    CurrencyType = new MDL(),
+                    Balance = 8700m }
+            });
             clients.Add(new Client
             {
                 Name = "Алиса Макаровна Шашли",
                 DateOfBirth = "05.08.2001",
                 PassNumber = "I-ПР753845",
 
-            }, new Account { AccNumber = 0230000000278456, CurrencyType = new RUB(), Balance = 1700m });
+            }, new List<Account> {
+                new Account {
+                    AccNumber = 0230000000278456,
+                    CurrencyType = new RUB(),
+                    Balance = 1700m },
+                new Account {
+                    AccNumber = 0230000000288456,
+                    CurrencyType = new USD(),
+                    Balance = 400m }
+            });
             clients.Add(new Client
             {
                 Name = "Изя Вольфович Шниперсон",
                 DateOfBirth = "14.06.1958",
                 PassNumber = "I-ПР753822",
 
-            }, new Account { AccNumber = 0230000000778456, CurrencyType = new USD(), Balance = 2300m });
+            }, new List<Account> {
+                new Account {
+                    AccNumber = 0230000000778456,
+                    CurrencyType = new USD(),
+                    Balance = 2300m }
+            });
 
 
             //Поиск по номеру паспорта
             DisplayClient(GetClientByPass(clients, "I-ПР058845"));
-
-
-            //Поиск по имени
             DisplayClientByName(clients, "Алиса Макаровна Шашли");
 
+            //Поиск по имени
+            // DisplayClientByName(clients, "Алиса Макаровна Шашли");
+
             //Выборка по сумме
-            DisplayClientUnderSum(clients, 1200);
+            // DisplayClientUnderSum(clients, 1200);
 
             //Поиск клиента с мин суммой
-            DisplayLowestSumClient(clients);
+            // DisplayLowestSumClient(clients);
 
             //Подсчет общей суммы денег
-            CountAllMoney(clients);
+            // CountAllMoney(clients);
 
             //Самый молодой клиент банка
-            DisplayYoungClient(clients);
+            //DisplayYoungClient(clients);
 
 
             DisplayConvertedCur(25, new USD(), new UAH());
@@ -88,6 +118,24 @@ namespace BankRegExtended
             var conv = new CurrencyConverter().ConvertCur(ammount, convertFrom, convertTo);
             Console.WriteLine($"Конвертировано: {ammount} {convertFrom.Sign} на {conv} {convertTo.Sign}");
         }
+
+
+
+        public static void DisplayClient(Dictionary<Client, List<Account>> resultPair)
+        {
+            foreach (var cl in resultPair)
+            {
+                foreach (var acc in cl.Value)
+                {
+                    Console.WriteLine($"Найдены данные по номеру пасспорта \n" +
+                    $"{cl.Key.Name} пасспорт № {cl.Key.PassNumber} \n Счет: {acc.AccNumber} " +
+                    $"{acc.Balance} {acc.CurrencyType.Sign} ");
+                }
+
+            }
+        }
+
+
         public static void DisplayClient(Dictionary<Client, Account> resultPair)
         {
             foreach (var cl in resultPair)
@@ -97,6 +145,41 @@ namespace BankRegExtended
                     $"{cl.Value.Balance} {cl.Value.CurrencyType.Sign} ");
             }
         }
+
+
+
+        public static Dictionary<Client, List<Account>> GetClientByPass(Dictionary<Client, List<Account>> clients, string passNumber)
+        {
+            var findName =
+                from client in clients
+                where client.Key.PassNumber == passNumber
+                select client;
+            Dictionary<Client, List<Account>> result = new Dictionary<Client, List<Account>>();
+            foreach (var item in findName)
+            {
+                foreach (var acc in item.Value)
+                {
+                    result.Add(
+                    new Client
+                    {
+                        Name = item.Key.Name,
+                        PassNumber = item.Key.PassNumber,
+                        DateOfBirth = item.Key.DateOfBirth
+                    },
+                    new List<Account>
+                     {
+                        new Account{
+
+                            AccNumber = acc.AccNumber,
+                            Balance = acc.Balance,
+                            CurrencyType = acc.CurrencyType}
+
+                     });
+                }
+            }
+            return result;
+        }
+
 
         public static Dictionary<Client, Account> GetClientByPass(Dictionary<Client, Account> clients, string passNumber)
         {
@@ -120,24 +203,49 @@ namespace BankRegExtended
                         Balance = item.Value.Balance,
                         CurrencyType = item.Value.CurrencyType
                     });
-                /*select (new Dictionary<Client, Account>().Add(
-                                    new Client
-                    {
-                        Name = client.Key.Name,
-                        PassNumber = client.Key.PassNumber,
-                        DateOfBirth = client.Key.DateOfBirth
-                    },
-                    new Account
-                    {
-                        AccNumber = client.Value.AccNumber,
-                        Balance = client.Value.Balance,
-                        CurrencyType = client.Value.CurrencyType
-                    }
-                    ))).FirstOrDefault();*/
+
 
             }
             return result;
         }
+
+
+
+
+        public static void DisplayClientByName(Dictionary<Client, List<Account>> clients, string name)
+        {
+            var findName =
+          from client in clients
+          where client.Key.Name == name
+          select client;
+
+            foreach (var cl in findName)
+            {
+
+                if (cl.Value.Count > 1)
+                {
+                    Console.WriteLine($" Найдены данные по ФИО : " +
+                        $"{cl.Key.Name} {cl.Key.DateOfBirth} \n счета клиента: \n");
+                    foreach (var acc in cl.Value)
+                    {
+                        Console.WriteLine($"  {acc.AccNumber} {acc.Balance} {acc.CurrencyType.Sign}");
+                    }
+                }
+                else
+                {
+                    foreach (var acc in cl.Value)
+                    {
+                        Console.WriteLine($" Найдены данные по ФИО : " +
+                        $"{cl.Key.Name} {cl.Key.DateOfBirth} " +
+                        $" {acc.AccNumber} {acc.Balance} {acc.CurrencyType.Sign} \n");
+                    }
+
+                }
+            }
+        }
+
+
+
         public static void DisplayClientByName(Dictionary<Client, Account> clients, string name)
         {
             var findName =
