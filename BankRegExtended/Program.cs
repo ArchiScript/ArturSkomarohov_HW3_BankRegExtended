@@ -6,22 +6,29 @@ using System.Linq;
 
 namespace BankRegExtended
 {
-    class Program
+    public class Program
     {
         public static void Main(string[] args)
         {
-            Dictionary<Client, Dictionary<ulong,Account>> clients = new Dictionary<Client, Dictionary<ulong, Account>>();
+
+            Dictionary<Client, List<Account>> clients =
+    new Dictionary<Client, List<Account>>();
             clients.Add(new Client
             {
                 Name = "Василий Александрович Петров",
                 DateOfBirth = "25.05.1975",
                 PassNumber = "I-ПР012345",
-                accounts
-                
-                
 
 
-            }, new Account { AccNumber = 0230000000563456, CurrencyType = new RUB(), Balance = 460m });
+            }, new List<Account>().Add(
+                new Account
+                {
+                    AccNumber = 0230000000143456,
+                    CurrencyType = new RUB(),
+                    Balance = 1200m
+                });
+                
+
             clients.Add(new Client
             {
                 Name = "Dan Brown",
@@ -71,7 +78,7 @@ namespace BankRegExtended
             //Самый молодой клиент банка
             DisplayYoungClient(clients);
 
-           
+
             DisplayConvertedCur(25, new USD(), new UAH());
         }
 

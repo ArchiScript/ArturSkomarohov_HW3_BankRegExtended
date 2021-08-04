@@ -12,7 +12,7 @@ namespace BankRegExtended
         public string Name { get; set; }
         public string DateOfBirth { get; set; }
         public string PassNumber { get; set; }
-        public Dictionary<ulong, Account> accounts = new Dictionary<ulong, Account>();
+        //public Dictionary<ulong, Account> accounts = new Dictionary<ulong, Account>();
         //public List<Account> AccountNumber;
         //public Account AccData;
         
