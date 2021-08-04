@@ -109,8 +109,10 @@ namespace BankRegExtended
             //DisplayYoungClient(clients);
 
 
+            //////-------------КОНВЕРТЕР ВАЛЮТ---------------
             DisplayConvertedCur(25, new USD(), new UAH());
         }
+
 
 
         public static void DisplayConvertedCur(decimal ammount, Currency convertFrom, Currency convertTo)
@@ -120,7 +122,7 @@ namespace BankRegExtended
         }
 
 
-
+        //-------------------ВЫВОД В КОНСОЛЬ ДЛЯ СЛОВАРЯ СО ВЛОЖЕННЫМ СПИСКОМ-------------
         public static void DisplayClient(Dictionary<Client, List<Account>> resultPair)
         {
             foreach (var cl in resultPair)
@@ -135,7 +137,7 @@ namespace BankRegExtended
             }
         }
 
-
+        //-------------------ВЫВОД В КОНСОЛЬ ДЛЯ СЛОВАРЯ-------------
         public static void DisplayClient(Dictionary<Client, Account> resultPair)
         {
             foreach (var cl in resultPair)
@@ -147,7 +149,7 @@ namespace BankRegExtended
         }
 
 
-
+        //----------ВОЗВРАТ НОВОГО СЛОВАРЯ ПО НОМЕРУ ПАСПОРТА (ДЛЯ СЛОВАРЯ СО ВЛОЖЕННЫМ СПИСКОМ)-------------
         public static Dictionary<Client, List<Account>> GetClientByPass(Dictionary<Client, List<Account>> clients, string passNumber)
         {
             var findName =
@@ -180,7 +182,7 @@ namespace BankRegExtended
             return result;
         }
 
-
+        //----------ВОЗВРАТ НОВОГО СЛОВАРЯ ПО НОМЕРУ ПАСПОРТА -------------
         public static Dictionary<Client, Account> GetClientByPass(Dictionary<Client, Account> clients, string passNumber)
         {
             var findName =
@@ -210,7 +212,7 @@ namespace BankRegExtended
         }
 
 
-
+        //----------ВЫВОД В КОНСОЛЬ ПО ИМЕНИ (ДЛЯ СЛОВАРЯ СО ВЛОЖЕННЫМ СПИСКОМ)---------------
 
         public static void DisplayClientByName(Dictionary<Client, List<Account>> clients, string name)
         {
@@ -245,7 +247,7 @@ namespace BankRegExtended
         }
 
 
-
+        //----------ВЫВОД В КОНСОЛЬ ПО ИМЕНИ (ДЛЯ СЛОВАРЯ )---------------
         public static void DisplayClientByName(Dictionary<Client, Account> clients, string name)
         {
             var findName =
@@ -271,6 +273,8 @@ namespace BankRegExtended
             }
         }
 
+
+        //----------ВЫВОД В КОНСОЛЬ ПО НАИМЕНЬШЕЙ СУММЫ (ДЛЯ СЛОВАРЯ )---------------
         public static void DisplayLowestSumClient(Dictionary<Client, Account> clients)
         {
             Dictionary<string, decimal> sumCollection =
@@ -290,6 +294,8 @@ namespace BankRegExtended
             }
         }
 
+
+        //----------ВЫВОД В КОНСОЛЬ ОБЩЕЙ СУММЫ (ДЛЯ СЛОВАРЯ )---------------
         public static void CountAllMoney(Dictionary<Client, Account> clients)
         {
             List<decimal> sumCollection = new List<decimal>();
@@ -301,6 +307,7 @@ namespace BankRegExtended
             Console.WriteLine($" Общая сумма остатков на счетах клиентов банка: {totalSum} \n");
         }
 
+        //----------ВЫВОД В КОНСОЛЬ ПО НАИМЕНЬШЕМУ ВОЗРАСТУ (ДЛЯ СЛОВАРЯ )-------
         public static void DisplayYoungClient(Dictionary<Client, Account> clients)
         {
             Dictionary<DateTime, string> birthDays =
